@@ -25,7 +25,8 @@ static const struct {
     {"macosx", false, false, true},
     {"windows", true, false, false},
     /* Other: linux, unix, ... */
-    {"other", true, true, false}
+    {"other", true, false, false},
+    {"bw", true, true, false}
 };
 static const unsigned platform_styles_count = sizeof(platform_styles)/sizeof(*platform_styles);
 
@@ -121,11 +122,15 @@ QIcon PlatformStyle::SingleColorIcon(const QIcon& icon) const
 
 QIcon PlatformStyle::TextColorIcon(const QString& filename) const
 {
+    if (!colorizeIcons)
+        return QIcon(filename);
     return ColorizeIcon(filename, TextColor());
 }
 
 QIcon PlatformStyle::TextColorIcon(const QIcon& icon) const
 {
+    if (!colorizeIcons)
+        return icon;
     return ColorizeIcon(icon, TextColor());
 }
 
